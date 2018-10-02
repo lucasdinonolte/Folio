@@ -1,24 +1,17 @@
-var Styles = require("../mixins/styles");
+var Styles = require('../mixins/styles');
+var Shape = require('../mixins/shape');
 
-var Util = require('../util');
-
-var Rectangle = function(x, y, width, height, doc) {
-  var bleed = doc.getBleed();
-  this.x = x;
-  this.y = y;
-  this.width = width;
-  this.height = height;
-
-  this.state = {};
+var Rectangle = function(options, doc) {
+  this.setupShape(options);
 }
 
 Rectangle.prototype = {
-  render: function(renderer) {
-    renderer.rect(this.x, this.y, this.width, this.height)
-            .fill(this.state.fill);
+  renderShape: function(renderer) {
+    renderer.rect(this.x, this.y, this.width, this.height);
   }
 };
 
 Object.assign(Rectangle.prototype, Styles);
+Object.assign(Rectangle.prototype, Shape);
 
 module.exports = Rectangle;

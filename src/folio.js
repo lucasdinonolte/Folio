@@ -3,9 +3,12 @@ var PDF = require('pdfkit');
 
 var Util = require('./util');
 
-var Grid = require('./grid');
+var Grid = require('./modules/grid');
+var TextStyle = require('./modules/text-style');
 
 var Rectangle = require("./shapes/rectangle");
+var Ellipse = require("./shapes/ellipse");
+var Text = require("./shapes/text");
 
 var Folio = function(options) {
   var params = Object.assign({
@@ -29,10 +32,42 @@ var Folio = function(options) {
 };
 
 Folio.prototype = {
-  rectangle: function(x, y, w, h) {
-    var r = new Folio.Rectangle(x, y, w, h, this);
+  positionAndSize: function(x, y, w, h) {
+    return {
+      x: this.unit(x) + this.bleed,
+      y: this.unit(y) + this.bleed,
+      width: this.unit(w),
+      height: this.unit(h),
+    };
+  },
+
+  rectangle: function(options) {
+    var r = new Folio.Rectangle(options);
     this.addElement(r);
     return r;
+  },
+
+  ellipse: function(options) {
+    var e = new Folio.Ellipse(options);
+    this.addElement(e);
+    return e;
+  },
+
+  textBox: function(options) {
+    var t = new Folio.Text(options);
+    this.addElement(t);
+    return t;
+  },
+
+  textBoxWithStyle: function(style, options) {
+    var t = this.textBox(options);
+    t.font(style.fontFamily);
+    t.fontSize(style.fontSize);
+    t.lineHeight(style.lineHeight);
+    t.align(style.align);
+    t.features(style.features);
+    t.fill(style.fill);
+    return t;
   },
 
   addElement: function(el) {
@@ -59,7 +94,9 @@ Folio.prototype = {
     doc.pipe(fs.createWriteStream(this.name));
 
     for(var i = 0; i < this.stage.length; i++) {
+      doc.save();
       this.stage[i].render(doc);
+      doc.restore();
     }
 
     doc.end();
@@ -70,6 +107,9 @@ Object.assign(Folio, Util);
 
 // Modules should be accessible through Folio
 Folio.Rectangle = Rectangle;
+Folio.Ellipse = Ellipse;
+Folio.Text = Text;
 Folio.Grid = Grid;
+Folio.TextStyle = TextStyle;
 
 module.exports = Folio;
