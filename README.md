@@ -15,6 +15,7 @@ var doc = new Folio({
   width: 85,
   height: 55,
   bleed: 3,
+  name: 'example-file.pdf'
 });
 
 var grid = new Folio.Grid({
