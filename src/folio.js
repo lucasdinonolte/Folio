@@ -3,6 +3,7 @@ var PDF = require('pdfkit');
 
 var Util = require('./util');
 
+var Page = require('./modules/page');
 var Grid = require('./modules/grid');
 var TextStyle = require('./modules/text-style');
 
@@ -41,6 +42,13 @@ Folio.prototype = {
     };
   },
 
+  page: function(options) {
+    var p = new Folio.Page(options, this, this.pages);
+    this.addElement(p);
+    this.pages++;
+    return p;
+  },
+
   rectangle: function(options) {
     var r = new Folio.Rectangle(options);
     this.addElement(r);
@@ -66,7 +74,8 @@ Folio.prototype = {
     t.lineHeight(style.lineHeight);
     t.align(style.align);
     t.features(style.features);
-    t.fill(style.fill);
+    t.fill(style.fill, style.fillColor);
+    t.stroke(style.stroke, style.strokeColor);
     return t;
   },
 
@@ -109,6 +118,7 @@ Object.assign(Folio, Util);
 Folio.Rectangle = Rectangle;
 Folio.Ellipse = Ellipse;
 Folio.Text = Text;
+Folio.Page = Page;
 Folio.Grid = Grid;
 Folio.TextStyle = TextStyle;
 

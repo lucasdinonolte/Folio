@@ -3,6 +3,10 @@ var Styles = {
     this.state.fill = color;
     return this;
   },
+  stroke: function(color) {
+    this.state.stroke = color;
+    return this;
+  },
   rotate: function(angle, origin) {
     var origin = Object.assign({
       x: 0.5,

@@ -8,7 +8,9 @@ var TextStyle = function(options) {
     tracking: 0,
     align: 'left',
     features: [],
-    fill: [0, 0, 0, 100],
+    fill: true,
+    fillColor: [0, 0, 0, 100],
+    stroke: false,
   }, options);
 
   this.fontFamily = params.fontFamily;
@@ -18,6 +20,9 @@ var TextStyle = function(options) {
   this.align = params.align;
   this.features = params.features;
   this.fill = params.fill;
+  this.fillColor = params.fillColor;
+  this.stroke = params.stroke;
+  this.strokeColor = params.strokeColor;
 };
 
 module.exports = TextStyle;

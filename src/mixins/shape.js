@@ -30,7 +30,13 @@ var Shape = {
 
     this.renderShape(renderer);
 
-    renderer.fill(this.state.fill);
+    if(this.state.fill) {
+      renderer.fill(this.state.fill);
+    }
+
+    if(this.state.stroke) {
+      renderer.stroke(this.state.stroke);
+    }
     renderer.restore();
   }
 };
