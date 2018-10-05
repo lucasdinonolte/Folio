@@ -18,12 +18,14 @@ var doc = new Folio({
 });
 
 var grid = new Folio.Grid({
-  cols: 5
+  cols: 5,
+  rows: 5,
 }, doc);
 
-for(var i = 0; i < grid.cols; i++) {
-  var col = grid.column(i+1);
-  doc.rectangle(col.x, col.y, col.width, col.height).fill(colors.grey);
+for(var i = 1; i <= grid.cols; i++) {
+  for(var j = 1; j <= grid.rows; j++) {
+    doc.rectangle(grid.module(i, i, j, j)).fill(colors.grey);
+  }
 }
 
 doc.render();
