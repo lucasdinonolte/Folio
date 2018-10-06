@@ -11,6 +11,7 @@ var TextStyle = function(options) {
     fill: true,
     fillColor: [0, 0, 0, 100],
     stroke: false,
+    tracking: 0,
   }, options);
 
   this.fontFamily = params.fontFamily;
@@ -23,6 +24,7 @@ var TextStyle = function(options) {
   this.fillColor = params.fillColor;
   this.stroke = params.stroke;
   this.strokeColor = params.strokeColor;
+  this.tracking = params.tracking;
 };
 
 module.exports = TextStyle;

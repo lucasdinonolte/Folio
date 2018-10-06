@@ -1,6 +1,9 @@
 var fs = require('fs');
 var PDF = require('pdfkit');
 
+var PDFRenderer = require('./renderers/pdf');
+var DummyRenderer = require('./renderers/dummy');
+
 var Util = require('./util');
 
 var Page = require('./modules/page');
@@ -19,6 +22,7 @@ var Folio = function(options) {
     name: 'file.pdf',
     pages: 1,
     bleed: 0,
+    renderer: PDFRenderer,
   }, options);
 
   this.unit = params.unit;
@@ -28,6 +32,7 @@ var Folio = function(options) {
   this.bleed = this.unit(params.bleed);
   this.name = params.name;
   this.pages = params.pages;
+  this.renderer = new params.renderer(this);
 
   this.stage = [];
 };
@@ -69,13 +74,7 @@ Folio.prototype = {
 
   textBoxWithStyle: function(style, options) {
     var t = this.textBox(options);
-    t.font(style.fontFamily);
-    t.fontSize(style.fontSize);
-    t.lineHeight(style.lineHeight);
-    t.align(style.align);
-    t.features(style.features);
-    t.fill(style.fill, style.fillColor);
-    t.stroke(style.stroke, style.strokeColor);
+    t.applyTextStyle(style);
     return t;
   },
 
@@ -96,19 +95,7 @@ Folio.prototype = {
   },
 
   render: function() {
-    var doc = new PDF({
-      size: [this.getWidth(), this.getHeight()]
-    });
-
-    doc.pipe(fs.createWriteStream(this.name));
-
-    for(var i = 0; i < this.stage.length; i++) {
-      doc.save();
-      this.stage[i].render(doc);
-      doc.restore();
-    }
-
-    doc.end();
+    this.renderer.render();
   }
 }
 
@@ -121,5 +108,8 @@ Folio.Text = Text;
 Folio.Page = Page;
 Folio.Grid = Grid;
 Folio.TextStyle = TextStyle;
+
+Folio.PDFRenderer = PDFRenderer;
+Folio.DummyRenderer = DummyRenderer;
 
 module.exports = Folio;

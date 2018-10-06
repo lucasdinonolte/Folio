@@ -1,9 +1,14 @@
 var Shape = require('../mixins/shape');
 var Styles = require('../mixins/styles');
 
-var Text = function(options, textStyle) {
-  this.setupShape(options);
-  this.textStyle = textStyle;
+var Text = function(options) {
+  var params = Object.assign({
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0
+  }, options);
+  this.setupShape(params);
 }
 
 Text.prototype = {
@@ -41,6 +46,24 @@ Text.prototype = {
     this.state.strokeColor = strokeColor;
     return this;
   },
+  tracking: function(tracking) {
+    this.state.tracking = this.state.fontSize / 1000 * tracking;
+    return this;
+  },
+  continued: function(continued) {
+    this.state.continued = continued;
+    return this;
+  },
+  applyTextStyle: function(style) {
+    this.font(style.fontFamily);
+    this.fontSize(style.fontSize);
+    this.lineHeight(style.lineHeight);
+    this.align(style.align);
+    this.tracking(style.tracking);
+    this.features(style.features);
+    this.fill(style.fill, style.fillColor);
+    this.stroke(style.stroke, style.strokeColor);
+  },
   renderShape: function(renderer) {
     renderer.font(this.state.font || 'Courier')
             .fontSize(this.state.fontSize)
@@ -58,6 +81,8 @@ Text.prototype = {
       align: this.state.align,
       fill: this.state.fill,
       stroke: this.state.stroke,
+      characterSpacing: this.state.tracking,
+      continued: this.state.continued || false
     });
 
     console.log(this.state);
