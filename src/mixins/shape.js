@@ -27,6 +27,9 @@ var Shape = {
     if(this.state.scale) {
       renderer.scale(this.state.scale);
     }
+    if(this.state.lineWidth) {
+      renderer.lineWidth(this.state.lineWidth);
+    }
 
     this.renderShape(renderer);
 
@@ -37,6 +40,8 @@ var Shape = {
     if(this.state.stroke) {
       renderer.stroke(this.state.stroke);
     }
+
+
     renderer.restore();
   }
 };

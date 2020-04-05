@@ -7,6 +7,10 @@ var Styles = {
     this.state.stroke = color;
     return this;
   },
+  strokeWeight: function(weight) {
+    this.state.lineWidth = weight;
+    return this;
+  },
   rotate: function(angle, origin) {
     var origin = Object.assign({
       x: 0.5,

@@ -11,7 +11,7 @@ DummyRenderer.prototype = {
 }
 
 // Satisfy the Interface
-var renderMethods = ['save', 'restore', 'font', 'fontSize', 'lineGap', 'fill', 'text', 'stroke', 'scale', 'rotate', 'ellipse', 'rect'];
+var renderMethods = ['save', 'restore', 'font', 'fontSize', 'lineGap', 'fill', 'text', 'stroke', 'scale', 'rotate', 'ellipse', 'rect', 'path', 'lineWidth'];
 
 renderMethods.forEach(function(method) {
   DummyRenderer.prototype[method] = function() {

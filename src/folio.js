@@ -13,6 +13,7 @@ var TextStyle = require('./modules/text-style');
 var Rectangle = require("./shapes/rectangle");
 var Ellipse = require("./shapes/ellipse");
 var Text = require("./shapes/text");
+var Path = require("./shapes/path");
 
 var Folio = function(options) {
   var params = Object.assign({
@@ -38,12 +39,34 @@ var Folio = function(options) {
 };
 
 Folio.prototype = {
+  position: function(x, y) {
+    return {
+      x: this.unit(x) + this.bleed,
+      y: this.unit(y) + this.bleed,
+    };
+  },
+  positionWithBleed: function(x, y) {
+    var pos = this.position(x, y);
+    return {
+      x: pos.x - this.bleed,
+      y: pos.y - this.bleed,
+    };
+  },
   positionAndSize: function(x, y, w, h) {
     return {
       x: this.unit(x) + this.bleed,
       y: this.unit(y) + this.bleed,
       width: this.unit(w),
       height: this.unit(h),
+    };
+  },
+  positionAndSizeWithBleed: function(x, y, w, h) {
+    var pos = this.positionAndSize(x, y, w, h);
+    return {
+      x: pos.x - this.bleed,
+      y: pos.y - this.bleed,
+      width: pos.width + 2*this.bleed,
+      height: pos.height + 2*this.bleed,
     };
   },
 
@@ -64,6 +87,12 @@ Folio.prototype = {
     var e = new Folio.Ellipse(options);
     this.addElement(e);
     return e;
+  },
+
+  path: function(options) {
+    var p = new Folio.Path(options);
+    this.addElement(p);
+    return p;
   },
 
   textBox: function(options) {
@@ -105,6 +134,7 @@ Object.assign(Folio, Util);
 Folio.Rectangle = Rectangle;
 Folio.Ellipse = Ellipse;
 Folio.Text = Text;
+Folio.Path = Path;
 Folio.Page = Page;
 Folio.Grid = Grid;
 Folio.TextStyle = TextStyle;

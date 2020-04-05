@@ -36,12 +36,12 @@ Text.prototype = {
     this.state.features = features;
     return this;
   },
-  fill: function(fill, fillColor) {
+  fillStyle: function(fill, fillColor) {
     this.state.fill = fill;
     this.state.fillColor = fillColor;
     return this;
   },
-  stroke: function(stroke, strokeColor) {
+  strokeStyle: function(stroke, strokeColor) {
     this.state.stroke = stroke;
     this.state.strokeColor = strokeColor;
     return this;
@@ -61,8 +61,8 @@ Text.prototype = {
     this.align(style.align);
     this.tracking(style.tracking);
     this.features(style.features);
-    this.fill(style.fill, style.fillColor);
-    this.stroke(style.stroke, style.strokeColor);
+    this.fillStyle(style.fill, style.fillColor);
+    this.strokeStyle(style.stroke, style.strokeColor);
   },
   renderShape: function(renderer) {
     renderer.font(this.state.font || 'Courier')
@@ -84,8 +84,6 @@ Text.prototype = {
       characterSpacing: this.state.tracking,
       continued: this.state.continued || false
     });
-
-    console.log(this.state);
   }
 };
 

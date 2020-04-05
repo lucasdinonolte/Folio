@@ -3,7 +3,7 @@ var PDF = require('pdfkit');
 
 var PDFRenderer = function(doc) {
   this.doc = doc;
-  this.documen = null;
+  this.document = null;
 }
 
 PDFRenderer.prototype = {
@@ -27,7 +27,7 @@ PDFRenderer.prototype = {
 };
 
 // Satisfy the Interface
-var renderMethods = ['save', 'restore', 'font', 'fontSize', 'lineGap', 'fill', 'text', 'stroke', 'scale', 'rotate', 'ellipse', 'rect'];
+var renderMethods = ['addPage', 'save', 'restore', 'font', 'fontSize', 'lineGap', 'fill', 'text', 'stroke', 'scale', 'rotate', 'ellipse', 'rect', 'path', 'lineWidth'];
 
 renderMethods.forEach(function(method) {
   PDFRenderer.prototype[method] = function() {
