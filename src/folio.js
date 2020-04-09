@@ -14,6 +14,7 @@ var Rectangle = require("./shapes/rectangle");
 var Ellipse = require("./shapes/ellipse");
 var Text = require("./shapes/text");
 var Path = require("./shapes/path");
+var Image = require("./shapes/image");
 
 var Folio = function(options) {
   var params = Object.assign({
@@ -69,14 +70,18 @@ Folio.prototype = {
       height: pos.height + 2*this.bleed,
     };
   },
-
   page: function(options) {
     var p = new Folio.Page(options, this, this.pages);
     this.addElement(p);
     this.pages++;
     return p;
   },
-
+  background: function(color) {
+    var r = this.rectangle(this.positionAndSize(0, 0, this.width, this.height));
+    r.fill(color);
+    this.addElement(r);
+    return r;
+  },
   rectangle: function(options) {
     var r = new Folio.Rectangle(options);
     this.addElement(r);
@@ -93,6 +98,12 @@ Folio.prototype = {
     var p = new Folio.Path(options);
     this.addElement(p);
     return p;
+  },
+
+  image: function(src, options) {
+    var i = new Folio.Image(src, options);
+    this.addElement(i);
+    return i;
   },
 
   textBox: function(options) {
@@ -135,6 +146,7 @@ Folio.Rectangle = Rectangle;
 Folio.Ellipse = Ellipse;
 Folio.Text = Text;
 Folio.Path = Path;
+Folio.Image = Image;
 Folio.Page = Page;
 Folio.Grid = Grid;
 Folio.TextStyle = TextStyle;

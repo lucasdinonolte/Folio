@@ -27,7 +27,7 @@ PDFRenderer.prototype = {
 };
 
 // Satisfy the Interface
-var renderMethods = ['addPage', 'save', 'restore', 'font', 'fontSize', 'lineGap', 'fill', 'text', 'stroke', 'scale', 'rotate', 'ellipse', 'rect', 'path', 'lineWidth'];
+var renderMethods = ['addPage', 'save', 'restore', 'clip', 'font', 'fontSize', 'lineGap', 'fill', 'text', 'stroke', 'scale', 'rotate', 'ellipse', 'rect', 'path', 'lineWidth', 'image'];
 
 renderMethods.forEach(function(method) {
   PDFRenderer.prototype[method] = function() {
