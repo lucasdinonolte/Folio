@@ -13,7 +13,7 @@
   "dependencies": {
     "deasync": "^0.1.19",
     "pdfkit": "^0.11.0",
-    "sharp": "^0.25.2"
+    "sharp": "^0.30.5"
   },
   "devDependencies": {
     "nodemon": "^1.19.1",
